@@ -22,7 +22,6 @@ private:
     std::vector<std::vector<double> > count;
 
     int hash(double cur_node, int i);
-
 };
 
 #endif /* numerichash_hpp */

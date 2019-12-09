@@ -25,7 +25,7 @@ private:
     std::vector<std::vector<int> > cat_recordhash;
     std::vector<std::vector<double> > count;
 
-    int numerichash(const std::vector<double> &cur_numeric, int i);
+    int numerichash(const std::vector<double>& cur_numeric, int i);
 
     int categhash(std::vector<int> cur_categ, int i);
 };

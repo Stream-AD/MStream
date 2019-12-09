@@ -7,17 +7,12 @@
 class Categhash {
 public:
     Categhash(int r, int b);
-
     void insert(int cur_int, double weight);
-
     double get_count(int cur_int);
-
     void clear();
-
     void lower(double factor);
 
 private:
-
     int num_rows;
     int num_buckets;
     std::vector<int> hash_a, hash_b;

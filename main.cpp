@@ -7,16 +7,16 @@
 
 using namespace std;
 
-void
-load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, vector<int> &times,
-          const string &numeric_filename, const string &categ_filename, const string &time_filename) {
+void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categorical, vector<int>& times, const string& numeric_filename, const string& categ_filename, const string& time_filename)
+{
     int l = 0;
     string s, line;
     if (!numeric_filename.empty()) {
         ifstream numericFile(numeric_filename);
         while (numericFile) {
             l++;
-            if (!getline(numericFile, s)) break;
+            if (!getline(numericFile, s))
+                break;
             if (s[0] != '#') {
                 istringstream ss(s);
                 vector<double> record;
@@ -28,7 +28,7 @@ load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, v
                     try {
                         record.push_back(stod(line));
                     }
-                    catch (const std::invalid_argument &e) {
+                    catch (const std::invalid_argument& e) {
                         cout << "NaN found in file " << numeric_filename << " line " << l
                              << endl;
                         e.what();
@@ -47,16 +47,18 @@ load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, v
         l = 0;
         while (categFile) {
             l++;
-            if (!getline(categFile, s)) break;
+            if (!getline(categFile, s))
+                break;
             if (s[0] != '#') {
                 istringstream ss(s);
                 vector<int> record;
                 while (ss) {
-                    if (!getline(ss, line, ',')) break;
+                    if (!getline(ss, line, ','))
+                        break;
                     try {
                         record.push_back(stoi(line));
                     }
-                    catch (const std::invalid_argument &e) {
+                    catch (const std::invalid_argument& e) {
                         cout << "NaN found in file " << categ_filename << " line " << l
                              << endl;
                         e.what();
@@ -74,15 +76,17 @@ load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, v
     l = 0;
     while (timeFile) {
         l++;
-        if (!getline(timeFile, s)) break;
+        if (!getline(timeFile, s))
+            break;
         if (s[0] != '#') {
             istringstream ss(s);
             while (ss) {
-                if (!getline(ss, line, ',')) break;
+                if (!getline(ss, line, ','))
+                    break;
                 try {
                     times.push_back(stoi(line));
                 }
-                catch (const std::invalid_argument &e) {
+                catch (const std::invalid_argument& e) {
                     cout << "NaN found in file " << time_filename << " line " << l
                          << endl;
                     e.what();
@@ -96,35 +100,34 @@ load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, v
     }
 }
 
-
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[])
+{
 
     argparse::ArgumentParser program("mstream");
     program.add_argument("-n", "--numerical")
-            .help("Numerical Data File");
+        .help("Numerical Data File");
     program.add_argument("-c", "--categorical")
-            .help("Categorical Data File");
+        .help("Categorical Data File");
     program.add_argument("-t", "--times")
-            .required()
-            .help("Timestamp Data File");
+        .required()
+        .help("Timestamp Data File");
     program.add_argument("-r", "--rows")
-            .default_value(2)
-            .action([](const std::string &value) { return std::stoi(value); })
-            .help("Number of rows. Default is 2");
+        .default_value(2)
+        .action([](const std::string& value) { return std::stoi(value); })
+        .help("Number of rows. Default is 2");
     program.add_argument("-b", "--buckets")
-            .default_value(1024)
-            .action([](const std::string &value) { return std::stoi(value); })
-            .help("Number of buckets. Default is 1024");
+        .default_value(1024)
+        .action([](const std::string& value) { return std::stoi(value); })
+        .help("Number of buckets. Default is 1024");
     program.add_argument("-a", "--alpha")
-            .default_value(0.6)
-            .action([](const std::string &value) { return std::stod(value); })
-            .help("Alpha: Temporal Decay Factor. Default is 0.6");
-    program.add_argument("-o", "--output").default_value(string("scores.txt")).help(
-            "Output File. Default is scores.txt");
+        .default_value(0.6)
+        .action([](const std::string& value) { return std::stod(value); })
+        .help("Alpha: Temporal Decay Factor. Default is 0.6");
+    program.add_argument("-o", "--output").default_value(string("scores.txt")).help("Output File. Default is scores.txt");
     try {
         program.parse_args(argc, argv);
     }
-    catch (const std::runtime_error &err) {
+    catch (const std::runtime_error& err) {
         std::cout << err.what() << std::endl;
         program.print_help();
         exit(0);
@@ -163,18 +166,18 @@ int main(int argc, const char *argv[]) {
     vector<int> times;
     int dimension1 = 0, dimension2 = 0;
     load_data(numeric, categ, times, numeric_filename, categ_filename, times_filename);
-    if (!numeric.empty()) dimension1 = numeric[0].size();
-    if (!categ.empty()) dimension2 = categ[0].size();
+    if (!numeric.empty())
+        dimension1 = numeric[0].size();
+    if (!categ.empty())
+        dimension2 = categ[0].size();
 
     cout << "Finished loading" << endl;
 
-
     clock_t start_time2 = clock();
-    vector<double> *scores2 = mstream(numeric, categ, times, rows, buckets, alpha, dimension1, dimension2);
-    cout << "@ " << ((double) (clock() - start_time2)) / CLOCKS_PER_SEC << endl;
+    vector<double>* scores2 = mstream(numeric, categ, times, rows, buckets, alpha, dimension1, dimension2);
+    cout << "@ " << ((double)(clock() - start_time2)) / CLOCKS_PER_SEC << endl;
 
-
-    FILE *output_file = fopen(output_filename.c_str(), "w");
+    FILE* output_file = fopen(output_filename.c_str(), "w");
     for (double i : *scores2) {
         fprintf(output_file, "%f\n", i);
     }

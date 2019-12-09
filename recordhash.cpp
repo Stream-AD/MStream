@@ -10,8 +10,8 @@
 
 using namespace std;
 
-
-Recordhash::Recordhash(int r, int b, int dim1, int dim2) {
+Recordhash::Recordhash(int r, int b, int dim1, int dim2)
+{
     num_rows = r;
     num_buckets = b;
     dimension1 = dim1;
@@ -42,7 +42,8 @@ Recordhash::Recordhash(int r, int b, int dim1, int dim2) {
     this->clear();
 }
 
-int Recordhash::numerichash(const vector<double> &cur_numeric, int i) {
+int Recordhash::numerichash(const vector<double>& cur_numeric, int i)
+{
 
     double sum = 0.0;
     int bitcounter = 0;
@@ -64,7 +65,8 @@ int Recordhash::numerichash(const vector<double> &cur_numeric, int i) {
     return b.to_ulong();
 }
 
-int Recordhash::categhash(vector<int> cur_categ, int i) {
+int Recordhash::categhash(vector<int> cur_categ, int i)
+{
 
     int counter = 0;
     int resid = 0;
@@ -74,12 +76,10 @@ int Recordhash::categhash(vector<int> cur_categ, int i) {
         counter++;
     }
     return resid + (resid < 0 ? num_buckets : 0);
-
 }
 
-
-void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, double weight) {
-
+void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, double weight)
+{
 
     vector<double> v(cur_numeric.size() + cur_categ.size());
     move(cur_numeric.begin(), cur_numeric.end(), v.begin());
@@ -94,32 +94,8 @@ void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, doubl
     }
 }
 
-double Recordhash::get_count(vector<double> cur_numeric, vector<int> cur_categ) {
+double Recordhash::get_count(vector<double> cur_numeric, vector<int> cur_categ)
+{
 
     vector<double> v(cur_numeric.size() + cur_categ.size());
-    move(cur_numeric.begin(), cur_numeric.end(), v.begin());
-    move(cur_categ.begin(), cur_categ.end(), v.begin() + cur_numeric.size());
-
-
-    double min_count = numeric_limits<double>::max();
-    int bucket1, bucket2, bucket;
-    for (int i = 0; i < num_rows; i++) {
-        bucket1 = numerichash(cur_numeric, i);
-        bucket2 = categhash(cur_categ, i);
-        bucket = (bucket1 + bucket2) % num_buckets;
-        min_count = MIN(min_count, count[i][bucket]);
-    }
-    return min_count;
-}
-
-void Recordhash::clear() {
-    count = vector<vector<double> >(num_rows, vector<double>(num_buckets, 0.0));
-}
-
-void Recordhash::lower(double factor) {
-    for (int i = 0; i < num_rows; i++) {
-        for (int j = 0; j < num_buckets; j++) {
-            count[i][j] = count[i][j] * factor;
-        }
-    }
-}
+    m
