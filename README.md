@@ -13,7 +13,7 @@ This implementation is based on the following paper - [M-Stream:Streaming Multi-
 
 
 ## Command line options
-  * `-h --help`: produce help message
+  * `-h --help`: produce help message
   * `-n --numerical`: Numerical file name
   * `-c --categorical`: Categorical file name
   * `-c --time`: Timestamps file name
@@ -28,6 +28,7 @@ M-Stream expects the input multi-aspect record stream to be stored in three file
 1. `Numerical file`: containing Numerical Features separated by `,`
 2. `Categorical file`: containing Categorical Features separated by `,`
 3. `Time File`: containing Timestamps
+
 Both Numerical and Categorical files contain corresponding features of the multi-aspect record. Records should be sorted in non-decreasing order of their time stamps and the column delimiter should be `,`
 
 
