@@ -94,8 +94,32 @@ void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, doubl
     }
 }
 
-double Recordhash::get_count(vector<double> cur_numeric, vector<int> cur_categ)
-{
+double Recordhash::get_count(vector<double> cur_numeric, vector<int> cur_categ) {
 
     vector<double> v(cur_numeric.size() + cur_categ.size());
-    m
+    move(cur_numeric.begin(), cur_numeric.end(), v.begin());
+    move(cur_categ.begin(), cur_categ.end(), v.begin() + cur_numeric.size());
+
+
+    double min_count = numeric_limits<double>::max();
+    int bucket1, bucket2, bucket;
+    for (int i = 0; i < num_rows; i++) {
+        bucket1 = numerichash(cur_numeric, i);
+        bucket2 = categhash(cur_categ, i);
+        bucket = (bucket1 + bucket2) % num_buckets;
+        min_count = MIN(min_count, count[i][bucket]);
+    }
+    return min_count;
+}
+
+void Recordhash::clear() {
+    count = vector<vector<double> >(num_rows, vector<double>(num_buckets, 0.0));
+}
+
+void Recordhash::lower(double factor) {
+    for (int i = 0; i < num_rows; i++) {
+        for (int j = 0; j < num_buckets; j++) {
+            count[i][j] = count[i][j] * factor;
+        }
+    }
+}
