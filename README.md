@@ -25,8 +25,8 @@ This implementation is based on the following paper - [M-Stream:Streaming Multi-
 
 ## Input file format
 M-Stream expects the input multi-aspect record stream to be stored in three files:
-1. `Numerical file`: containing Numerical Features separated by `,`
-2. `Categorical file`: containing Categorical Features separated by `,`
+1. `Numerical file`: containing `,` separated Numerical Features
+2. `Categorical file`: containing `,` separated Categorical Features
 3. `Time File`: containing Timestamps
 
 Both Numerical and Categorical files contain corresponding features of the multi-aspect record. Records should be sorted in non-decreasing order of their time stamps and the column delimiter should be `,`
