@@ -14,13 +14,13 @@ This implementation is based on the following paper - [M-Stream:Streaming Multi-
 
 ## Command line options
   * `-h --help`: produce help message
-  * `-n --numerical`: Numerical file name
+  * `-n --numerical`: Numerical file name
   * `-c --categorical`: Categorical file name
   * `-c --time`: Timestamps file name
-  * `-o --output`: Output file name (default: scores.txt)  
-  * `-r --rows`: Number of Hash Functions (default: 2)  
-  * `-b --buckets`: Number of Buckets (default: 1024)
-  * `-a --alpha`: Temporal Decay Factor (default: 0.6)
+  * `-o --output`: Output file name (default: scores.txt)  
+  * `-r --rows`: Number of Hash Functions (default: 2)  
+  * `-b --buckets`: Number of Buckets (default: 1024)
+  * `-a --alpha`: Temporal Decay Factor (default: 0.6)
 
 
 ## Input file format
