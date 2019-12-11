@@ -17,10 +17,11 @@ Recordhash::Recordhash(int r, int b, int dim1, int dim2)
     dimension1 = dim1;
     dimension2 = dim2;
     MTRand mtr;
+    int log_bucket;
 
     num_recordhash.resize(num_rows);
     for (int i = 0; i < num_rows; i++) {
-        int log_bucket = ceil(log2(num_buckets));
+        log_bucket = ceil(log2(num_buckets));
         num_recordhash[i].resize(log_bucket);
         for (int j = 0; j < log_bucket; j++) {
             num_recordhash[i][j].resize(dimension1);
@@ -48,8 +49,9 @@ int Recordhash::numerichash(const vector<double>& cur_numeric, int i)
     double sum = 0.0;
     int bitcounter = 0;
     bitset<10> b;
+    int log_bucket=ceil(log2(num_buckets));
 
-    for (int iter = 0; iter < 10; iter++) {
+    for (int iter = 0; iter < log_bucket; iter++) {
         sum = 0;
         for (int k = 0; k < dimension1; k++) {
             sum = sum + num_recordhash[i][iter][k] * cur_numeric[k];
