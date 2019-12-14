@@ -21,7 +21,7 @@ private:
     int num_buckets;
     std::vector<std::vector<double> > count;
 
-    int hash(double cur_node, int i);
+    int hash(double cur_node);
 };
 
 #endif /* numerichash_hpp */

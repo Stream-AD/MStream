@@ -8,27 +8,29 @@
 #include "recordhash.hpp"
 #include "categhash.hpp"
 
-double counts_to_anom(double tot, double cur, int cur_t)
-{
+double counts_to_anom(double tot, double cur, int cur_t) {
     double cur_mean = tot / cur_t;
     double sq = pow(cur, 2);
     return sq / cur_mean;
 }
 
-vector<double>* mstream(vector<vector<double> >& numeric, vector<vector<int> >& categ, vector<int>& times, int num_rows, int num_buckets, double factor, int dimension1, int dimension2)
-{
+vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &categ, vector<int> &times, int num_rows,
+                        int num_buckets, double factor, int dimension1, int dimension2) {
 
     int length = times.size(), cur_t = 1;
 
     Recordhash cur_count(num_rows, num_buckets, dimension1, dimension2);
     Recordhash total_count(num_rows, num_buckets, dimension1, dimension2);
 
-    auto* anom_score = new vector<double>(length);
+    auto *anom_score = new vector<double>(length);
 
     vector<Numerichash> numeric_score(dimension1, Numerichash(num_rows, num_buckets));
     vector<Numerichash> numeric_total(dimension1, Numerichash(num_rows, num_buckets));
     vector<Categhash> categ_score(dimension2, Categhash(num_rows, num_buckets));
     vector<Categhash> categ_total(dimension2, Categhash(num_rows, num_buckets));
+
+    vector<double> cur_numeric(0);
+    vector<int> cur_categ(0);
 
     for (int i = 0; i < length; i++) {
         if (i == 0 || times[i] > cur_t) {
@@ -42,9 +44,10 @@ vector<double>* mstream(vector<vector<double> >& numeric, vector<vector<int> >& 
             cur_t = times[i];
         }
 
-        vector<double> cur_numeric(numeric[i]);
-        vector<int> cur_categ(categ[i]);
-
+        if (dimension1)
+            cur_numeric.swap(numeric[i]);
+        if (dimension2)
+            cur_categ.swap(categ[i]);
         cur_count.insert(cur_numeric, cur_categ, 1);
         total_count.insert(cur_numeric, cur_categ, 1);
 
@@ -53,7 +56,7 @@ vector<double>* mstream(vector<vector<double> >& numeric, vector<vector<int> >& 
             numeric_score[node_iter].insert(cur_numeric[node_iter], 1);
             numeric_total[node_iter].insert(cur_numeric[node_iter], 1);
             t = counts_to_anom(numeric_total[node_iter].get_count(cur_numeric[node_iter]),
-                numeric_score[node_iter].get_count(cur_numeric[node_iter]), cur_t);
+                               numeric_score[node_iter].get_count(cur_numeric[node_iter]), cur_t);
             if (max < t)
                 max = t;
         }
@@ -62,12 +65,13 @@ vector<double>* mstream(vector<vector<double> >& numeric, vector<vector<int> >& 
             categ_score[node_iter].insert(cur_categ[node_iter], 1);
             categ_total[node_iter].insert(cur_categ[node_iter], 1);
             t = counts_to_anom(categ_total[node_iter].get_count(cur_categ[node_iter]),
-                categ_score[node_iter].get_count(cur_categ[node_iter]), cur_t);
+                               categ_score[node_iter].get_count(cur_categ[node_iter]), cur_t);
             if (max < t)
                 max = t;
         }
 
-        cur_score = counts_to_anom(total_count.get_count(cur_numeric, cur_categ), cur_count.get_count(cur_numeric, cur_categ), cur_t);
+        cur_score = counts_to_anom(total_count.get_count(cur_numeric, cur_categ),
+                                   cur_count.get_count(cur_numeric, cur_categ), cur_t);
 
         combined_score = MAX(max, cur_score);
         (*anom_score)[i] = log(1 + combined_score);

@@ -7,8 +7,8 @@
 
 using namespace std;
 
-void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categorical, vector<int>& times, const string& numeric_filename, const string& categ_filename, const string& time_filename)
-{
+void load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, vector<int> &times,
+               const string &numeric_filename, const string &categ_filename, const string &time_filename) {
     int l = 0;
     string s, line;
     if (!numeric_filename.empty()) {
@@ -28,7 +28,7 @@ void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categoric
                     try {
                         record.push_back(stod(line));
                     }
-                    catch (const std::invalid_argument& e) {
+                    catch (const std::invalid_argument &e) {
                         cout << "NaN found in file " << numeric_filename << " line " << l
                              << endl;
                         e.what();
@@ -58,7 +58,7 @@ void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categoric
                     try {
                         record.push_back(stoi(line));
                     }
-                    catch (const std::invalid_argument& e) {
+                    catch (const std::invalid_argument &e) {
                         cout << "NaN found in file " << categ_filename << " line " << l
                              << endl;
                         e.what();
@@ -86,7 +86,7 @@ void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categoric
                 try {
                     times.push_back(stoi(line));
                 }
-                catch (const std::invalid_argument& e) {
+                catch (const std::invalid_argument &e) {
                     cout << "NaN found in file " << time_filename << " line " << l
                          << endl;
                     e.what();
@@ -100,34 +100,36 @@ void load_data(vector<vector<double> >& numeric, vector<vector<int> >& categoric
     }
 }
 
-int main(int argc, const char* argv[])
-{
+int main(int argc, const char *argv[]) {
 
     argparse::ArgumentParser program("mstream");
     program.add_argument("-n", "--numerical")
-        .help("Numerical Data File");
+            .default_value(string(""))
+            .help("Numerical Data File");
     program.add_argument("-c", "--categorical")
-        .help("Categorical Data File");
+            .default_value(string(""))
+            .help("Categorical Data File");
     program.add_argument("-t", "--times")
-        .required()
-        .help("Timestamp Data File");
+            .required()
+            .help("Timestamp Data File");
     program.add_argument("-r", "--rows")
-        .default_value(2)
-        .action([](const std::string& value) { return std::stoi(value); })
-        .help("Number of rows. Default is 2");
+            .default_value(2)
+            .action([](const std::string &value) { return std::stoi(value); })
+            .help("Number of rows. Default is 2");
     program.add_argument("-b", "--buckets")
-        .default_value(1024)
-        .action([](const std::string& value) { return std::stoi(value); })
-        .help("Number of buckets. Default is 1024");
+            .default_value(1024)
+            .action([](const std::string &value) { return std::stoi(value); })
+            .help("Number of buckets. Default is 1024");
     program.add_argument("-a", "--alpha")
-        .default_value(0.6)
-        .action([](const std::string& value) { return std::stod(value); })
-        .help("Alpha: Temporal Decay Factor. Default is 0.6");
-    program.add_argument("-o", "--output").default_value(string("scores.txt")).help("Output File. Default is scores.txt");
+            .default_value(0.6)
+            .action([](const std::string &value) { return std::stod(value); })
+            .help("Alpha: Temporal Decay Factor. Default is 0.6");
+    program.add_argument("-o", "--output").default_value(string("scores.txt")).help(
+            "Output File. Default is scores.txt");
     try {
         program.parse_args(argc, argv);
     }
-    catch (const std::runtime_error& err) {
+    catch (const std::runtime_error &err) {
         std::cout << err.what() << std::endl;
         program.print_help();
         exit(0);
@@ -174,10 +176,10 @@ int main(int argc, const char* argv[])
     cout << "Finished loading" << endl;
 
     clock_t start_time2 = clock();
-    vector<double>* scores2 = mstream(numeric, categ, times, rows, buckets, alpha, dimension1, dimension2);
-    cout << "@ " << ((double)(clock() - start_time2)) / CLOCKS_PER_SEC << endl;
+    vector<double> *scores2 = mstream(numeric, categ, times, rows, buckets, alpha, dimension1, dimension2);
+    cout << "@ " << ((double) (clock() - start_time2)) / CLOCKS_PER_SEC << endl;
 
-    FILE* output_file = fopen(output_filename.c_str(), "w");
+    FILE *output_file = fopen(output_filename.c_str(), "w");
     for (double i : *scores2) {
         fprintf(output_file, "%f\n", i);
     }

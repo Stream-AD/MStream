@@ -7,8 +7,7 @@
 
 using namespace std;
 
-Categhash::Categhash(int r, int b)
-{
+Categhash::Categhash(int r, int b) {
     num_rows = r;
     num_buckets = b;
     hash_a.resize(num_rows);
@@ -21,14 +20,12 @@ Categhash::Categhash(int r, int b)
     this->clear();
 }
 
-int Categhash::hash(int a, int i)
-{
+int Categhash::hash(int a, int i) {
     int resid = (a * hash_a[i] + hash_b[i]) % num_buckets;
     return resid + (resid < 0 ? num_buckets : 0);
 }
 
-void Categhash::insert(int cur_int, double weight)
-{
+void Categhash::insert(int cur_int, double weight) {
     int bucket;
     for (int i = 0; i < num_rows; i++) {
         bucket = hash(cur_int, i);
@@ -36,8 +33,7 @@ void Categhash::insert(int cur_int, double weight)
     }
 }
 
-double Categhash::get_count(int cur_int)
-{
+double Categhash::get_count(int cur_int) {
     double min_count = numeric_limits<double>::max();
     int bucket;
     for (int i = 0; i < num_rows; i++) {
@@ -47,13 +43,11 @@ double Categhash::get_count(int cur_int)
     return min_count;
 }
 
-void Categhash::clear()
-{
+void Categhash::clear() {
     count = vector<vector<double> >(num_rows, vector<double>(num_buckets, 0.0));
 }
 
-void Categhash::lower(double factor)
-{
+void Categhash::lower(double factor) {
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_buckets; j++) {
             count[i][j] = count[i][j] * factor;

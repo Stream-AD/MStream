@@ -10,8 +10,7 @@
 
 using namespace std;
 
-Recordhash::Recordhash(int r, int b, int dim1, int dim2)
-{
+Recordhash::Recordhash(int r, int b, int dim1, int dim2) {
     num_rows = r;
     num_buckets = b;
     dimension1 = dim1;
@@ -37,19 +36,19 @@ Recordhash::Recordhash(int r, int b, int dim1, int dim2)
         for (int k = 0; k < dimension2 - 1; k++) {
             cat_recordhash[i][k] = (rand() % (num_buckets - 1) + 1);
         }
-        cat_recordhash[i][dimension2 - 1] = (rand() % num_buckets);
+        if (dimension2)
+            cat_recordhash[i][dimension2 - 1] = (rand() % num_buckets);
     }
 
     this->clear();
 }
 
-int Recordhash::numerichash(const vector<double>& cur_numeric, int i)
-{
+int Recordhash::numerichash(const vector<double> &cur_numeric, int i) {
 
     double sum = 0.0;
     int bitcounter = 0;
     bitset<10> b;
-    int log_bucket=ceil(log2(num_buckets));
+    int log_bucket = ceil(log2(num_buckets));
 
     for (int iter = 0; iter < log_bucket; iter++) {
         sum = 0;
@@ -67,8 +66,7 @@ int Recordhash::numerichash(const vector<double>& cur_numeric, int i)
     return b.to_ulong();
 }
 
-int Recordhash::categhash(vector<int> cur_categ, int i)
-{
+int Recordhash::categhash(vector<int> &cur_categ, int i) {
 
     int counter = 0;
     int resid = 0;
@@ -80,12 +78,7 @@ int Recordhash::categhash(vector<int> cur_categ, int i)
     return resid + (resid < 0 ? num_buckets : 0);
 }
 
-void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, double weight)
-{
-
-    vector<double> v(cur_numeric.size() + cur_categ.size());
-    move(cur_numeric.begin(), cur_numeric.end(), v.begin());
-    move(cur_categ.begin(), cur_categ.end(), v.begin() + cur_numeric.size());
+void Recordhash::insert(vector<double> &cur_numeric, vector<int> &cur_categ, double weight) {
     int bucket1, bucket2, bucket;
 
     for (int i = 0; i < num_rows; i++) {
@@ -96,13 +89,7 @@ void Recordhash::insert(vector<double> cur_numeric, vector<int> cur_categ, doubl
     }
 }
 
-double Recordhash::get_count(vector<double> cur_numeric, vector<int> cur_categ) {
-
-    vector<double> v(cur_numeric.size() + cur_categ.size());
-    move(cur_numeric.begin(), cur_numeric.end(), v.begin());
-    move(cur_categ.begin(), cur_categ.end(), v.begin() + cur_numeric.size());
-
-
+double Recordhash::get_count(vector<double> &cur_numeric, vector<int> &cur_categ) {
     double min_count = numeric_limits<double>::max();
     int bucket1, bucket2, bucket;
     for (int i = 0; i < num_rows; i++) {
