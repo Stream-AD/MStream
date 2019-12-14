@@ -29,7 +29,14 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &
     vector<Categhash> categ_score(dimension2, Categhash(num_rows, num_buckets));
     vector<Categhash> categ_total(dimension2, Categhash(num_rows, num_buckets));
 
+    double cur_value;
     vector<double> cur_numeric(0);
+    vector<double> max_numeric(0);
+    vector<double> min_numeric(0);
+    if (dimension1) {
+        max_numeric.resize(dimension1, numeric_limits<double>::min());
+        min_numeric.resize(dimension1, numeric_limits<double>::max());
+    }
     vector<int> cur_categ(0);
 
     for (int i = 0; i < length; i++) {
@@ -48,11 +55,22 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &
             cur_numeric.swap(numeric[i]);
         if (dimension2)
             cur_categ.swap(categ[i]);
-        cur_count.insert(cur_numeric, cur_categ, 1);
-        total_count.insert(cur_numeric, cur_categ, 1);
 
         double max = 0.0, t, cur_score, combined_score;
         for (int node_iter = 0; node_iter < dimension1; node_iter++) {
+            cur_numeric[node_iter] = log10(1 + cur_numeric[node_iter]);
+            if (!node_iter) {
+                max_numeric[node_iter] = cur_numeric[node_iter];
+                min_numeric[node_iter] = cur_numeric[node_iter];
+                cur_value = 0;
+            } else {
+                min_numeric[node_iter] = MIN(min_numeric[node_iter], cur_numeric[node_iter]);
+                max_numeric[node_iter] = MAX(max_numeric[node_iter], cur_numeric[node_iter]);
+                if (max_numeric[node_iter] == min_numeric[node_iter]) cur_value = 0;
+                else cur_value = (cur_numeric[node_iter] - min_numeric[node_iter]) /
+                                 (max_numeric[node_iter] - min_numeric[node_iter]);
+            }
+            cur_numeric[node_iter] = cur_value;
             numeric_score[node_iter].insert(cur_numeric[node_iter], 1);
             numeric_total[node_iter].insert(cur_numeric[node_iter], 1);
             t = counts_to_anom(numeric_total[node_iter].get_count(cur_numeric[node_iter]),
@@ -60,6 +78,8 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &
             if (max < t)
                 max = t;
         }
+        cur_count.insert(cur_numeric, cur_categ, 1);
+        total_count.insert(cur_numeric, cur_categ, 1);
 
         for (int node_iter = 0; node_iter < dimension2; node_iter++) {
             categ_score[node_iter].insert(cur_categ[node_iter], 1);
