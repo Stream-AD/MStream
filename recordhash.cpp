@@ -66,7 +66,7 @@ int Recordhash::numerichash(const vector<double> &cur_numeric, int i) {
     return b.to_ulong();
 }
 
-int Recordhash::categhash(vector<int> &cur_categ, int i) {
+int Recordhash::categhash(vector<long> &cur_categ, int i) {
 
     int counter = 0;
     int resid = 0;
@@ -78,7 +78,7 @@ int Recordhash::categhash(vector<int> &cur_categ, int i) {
     return resid + (resid < 0 ? num_buckets : 0);
 }
 
-void Recordhash::insert(vector<double> &cur_numeric, vector<int> &cur_categ, double weight) {
+void Recordhash::insert(vector<double> &cur_numeric, vector<long> &cur_categ, double weight) {
     int bucket1, bucket2, bucket;
 
     for (int i = 0; i < num_rows; i++) {
@@ -89,7 +89,7 @@ void Recordhash::insert(vector<double> &cur_numeric, vector<int> &cur_categ, dou
     }
 }
 
-double Recordhash::get_count(vector<double> &cur_numeric, vector<int> &cur_categ) {
+double Recordhash::get_count(vector<double> &cur_numeric, vector<long> &cur_categ) {
     double min_count = numeric_limits<double>::max();
     int bucket1, bucket2, bucket;
     for (int i = 0; i < num_rows; i++) {

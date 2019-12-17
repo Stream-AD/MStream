@@ -20,12 +20,12 @@ Categhash::Categhash(int r, int b) {
     this->clear();
 }
 
-int Categhash::hash(int a, int i) {
+int Categhash::hash(long a, int i) {
     int resid = (a * hash_a[i] + hash_b[i]) % num_buckets;
     return resid + (resid < 0 ? num_buckets : 0);
 }
 
-void Categhash::insert(int cur_int, double weight) {
+void Categhash::insert(long cur_int, double weight) {
     int bucket;
     for (int i = 0; i < num_rows; i++) {
         bucket = hash(cur_int, i);
@@ -33,7 +33,7 @@ void Categhash::insert(int cur_int, double weight) {
     }
 }
 
-double Categhash::get_count(int cur_int) {
+double Categhash::get_count(long cur_int) {
     double min_count = numeric_limits<double>::max();
     int bucket;
     for (int i = 0; i < num_rows; i++) {

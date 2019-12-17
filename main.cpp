@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void load_data(vector<vector<double> > &numeric, vector<vector<int> > &categorical, vector<int> &times,
+void load_data(vector<vector<double> > &numeric, vector<vector<long> > &categorical, vector<int> &times,
                const string &numeric_filename, const string &categ_filename, const string &time_filename) {
     int l = 0;
     string s, line;
@@ -51,12 +51,12 @@ void load_data(vector<vector<double> > &numeric, vector<vector<int> > &categoric
                 break;
             if (s[0] != '#') {
                 istringstream ss(s);
-                vector<int> record;
+                vector<long> record;
                 while (ss) {
                     if (!getline(ss, line, ','))
                         break;
                     try {
-                        record.push_back(stoi(line));
+                        record.push_back(stol(line));
                     }
                     catch (const std::invalid_argument &e) {
                         cout << "NaN found in file " << categ_filename << " line " << l
@@ -132,7 +132,7 @@ int main(int argc, const char *argv[]) {
     catch (const std::runtime_error &err) {
         std::cout << err.what() << std::endl;
         program.print_help();
-        exit(0);
+        exit(1);
     }
 
     string numeric_filename = program.get<string>("-n");
@@ -145,26 +145,26 @@ int main(int argc, const char *argv[]) {
 
     if (rows < 1) {
         cerr << "Number of numerichash functions should be positive.\n";
-        exit(0);
+        exit(1);
     }
 
     if (buckets < 2) {
         cerr << "Number of buckets should be at least 2\n";
-        exit(0);
+        exit(1);
     }
 
     if (alpha <= 0 || alpha >= 1) {
         cerr << "Alpha: Temporal Decay Factor must be between 0 and 1.\n";
-        exit(0);
+        exit(1);
     }
 
     if (numeric_filename.empty() && categ_filename.empty()) {
         cerr << "Please give at least one of numeric or categorical data file\n";
-        exit(0);
+        exit(1);
     }
 
     vector<vector<double> > numeric;
-    vector<vector<int> > categ;
+    vector<vector<long> > categ;
     vector<int> times;
     int dimension1 = 0, dimension2 = 0;
     load_data(numeric, categ, times, numeric_filename, categ_filename, times_filename);
@@ -172,6 +172,10 @@ int main(int argc, const char *argv[]) {
         dimension1 = numeric[0].size();
     if (!categ.empty())
         dimension2 = categ[0].size();
+    if ((dimension1 && times.size() != numeric.size()) || (dimension2 && times.size() != categ.size())) {
+        cerr << "Number of records in the files do not match.\n";
+        exit(1);
+    }
 
     cout << "Finished loading" << endl;
 

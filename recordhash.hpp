@@ -8,9 +8,9 @@ class Recordhash {
 public:
     Recordhash(int r, int b, int dim1, int dim2);
 
-    void insert(std::vector<double> &cur_numeric, std::vector<int> &cur_categ, double weight);
+    void insert(std::vector<double> &cur_numeric, std::vector<long> &cur_categ, double weight);
 
-    double get_count(std::vector<double> &cur_numeric, std::vector<int> &cur_categ);
+    double get_count(std::vector<double> &cur_numeric, std::vector<long> &cur_categ);
 
     void clear();
 
@@ -27,7 +27,7 @@ private:
 
     int numerichash(const std::vector<double>& cur_numeric, int i);
 
-    int categhash(std::vector<int> &cur_categ, int i);
+    int categhash(std::vector<long> &cur_categ, int i);
 };
 
 #endif /* recordhash_hpp */

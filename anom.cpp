@@ -14,7 +14,7 @@ double counts_to_anom(double tot, double cur, int cur_t) {
     return sq / cur_mean;
 }
 
-vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &categ, vector<int> &times, int num_rows,
+vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<long> > &categ, vector<int> &times, int num_rows,
                         int num_buckets, double factor, int dimension1, int dimension2) {
 
     int length = times.size(), cur_t = 1;
@@ -36,7 +36,7 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<int> > &
         max_numeric.resize(dimension1, numeric_limits<double>::min());
         min_numeric.resize(dimension1, numeric_limits<double>::max());
     }
-    vector<int> cur_categ(0);
+    vector<long> cur_categ(0);
 
     for (int i = 0; i < length; i++) {
         if (i == 0 || times[i] > cur_t) {

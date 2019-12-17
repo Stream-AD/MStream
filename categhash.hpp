@@ -7,8 +7,8 @@
 class Categhash {
 public:
     Categhash(int r, int b);
-    void insert(int cur_int, double weight);
-    double get_count(int cur_int);
+    void insert(long cur_int, double weight);
+    double get_count(long cur_int);
     void clear();
     void lower(double factor);
 
@@ -18,7 +18,7 @@ private:
     std::vector<int> hash_a, hash_b;
     std::vector<std::vector<double> > count;
 
-    int hash(int cur_int, int i);
+    int hash(long cur_int, int i);
 };
 
 #endif /* categhash_hpp */
