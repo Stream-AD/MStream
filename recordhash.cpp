@@ -47,8 +47,8 @@ int Recordhash::numerichash(const vector<double> &cur_numeric, int i) {
 
     double sum = 0.0;
     int bitcounter = 0;
-    bitset<10> b;
     int log_bucket = ceil(log2(num_buckets));
+    bitset<30> b;
 
     for (int iter = 0; iter < log_bucket; iter++) {
         sum = 0;
