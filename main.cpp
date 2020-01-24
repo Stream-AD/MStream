@@ -121,7 +121,7 @@ int main(int argc, const char *argv[]) {
             .action([](const std::string &value) { return std::stoi(value); })
             .help("Number of buckets. Default is 1024");
     program.add_argument("-a", "--alpha")
-            .default_value(0.6)
+            .default_value(0.8)
             .action([](const std::string &value) { return std::stod(value); })
             .help("Alpha: Temporal Decay Factor. Default is 0.6");
     program.add_argument("-o", "--output").default_value(string("scores.txt")).help(

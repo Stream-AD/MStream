@@ -10,8 +10,8 @@
 
 double counts_to_anom(double tot, double cur, int cur_t) {
     double cur_mean = tot / cur_t;
-    double sq = pow(cur, 2);
-    return sq / cur_mean;
+	double sqerr = pow(MAX(0, cur - cur_mean), 2);
+    return sqerr / cur_mean + sqerr / (cur_mean * MAX(1, cur_t - 1));
 }
 
 vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<long> > &categ, vector<int> &times, int num_rows,
@@ -55,7 +55,7 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<long> > 
         if (dimension2)
             cur_categ.swap(categ[i]);
 
-        double max = 0.0, t, cur_score, combined_score;
+        double sum = 0.0, t, cur_score;
         for (int node_iter = 0; node_iter < dimension1; node_iter++) {
             cur_numeric[node_iter] = log10(1 + cur_numeric[node_iter]);
             if (!i) {
@@ -73,8 +73,7 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<long> > 
             numeric_total[node_iter].insert(cur_numeric[node_iter], 1);
             t = counts_to_anom(numeric_total[node_iter].get_count(cur_numeric[node_iter]),
                                numeric_score[node_iter].get_count(cur_numeric[node_iter]), cur_t);
-            if (max < t)
-                max = t;
+            sum = sum+t;
         }
         cur_count.insert(cur_numeric, cur_categ, 1);
         total_count.insert(cur_numeric, cur_categ, 1);
@@ -84,38 +83,14 @@ vector<double> *mstream(vector<vector<double> > &numeric, vector<vector<long> > 
             categ_total[node_iter].insert(cur_categ[node_iter], 1);
             t = counts_to_anom(categ_total[node_iter].get_count(cur_categ[node_iter]),
                                categ_score[node_iter].get_count(cur_categ[node_iter]), cur_t);
-            if (max < t)
-                max = t;
+            sum = sum+t;
         }
 
         cur_score = counts_to_anom(total_count.get_count(cur_numeric, cur_categ),
                                    cur_count.get_count(cur_numeric, cur_categ), cur_t);
+        sum = sum + cur_score;
+        (*anom_score)[i] = log(1 + sum);
 
-        combined_score = MAX(max, cur_score);
-        (*anom_score)[i] = log(1 + combined_score);
-
-        /*
-        double sum=0.0;
-        for(int node_iter=0;node_iter<dimension1;node_iter++) {
-            numeric_score[node_iter].insert(cur_numeric[node_iter],1);
-            numeric_total[node_iter].insert(cur_numeric[node_iter],1);
-            double t=counts_to_anom(numeric_total[node_iter].get_count(cur_numeric[node_iter]), numeric_score[node_iter].get_count(cur_numeric[node_iter]), cur_t);
-            sum=sum+t;
-        }
-
-        for(int node_iter=0;node_iter<dimension2;node_iter++){
-            categ_score[node_iter].insert(cur_categ[node_iter],1);
-            categ_total[node_iter].insert(cur_categ[node_iter],1);
-            double t=counts_to_anom(categ_total[node_iter].get_count(cur_categ[node_iter]), categ_score[node_iter].get_count(cur_categ[node_iter]), cur_t);
-            sum=sum+t;
-        }
-        
-
-        double cur_score = counts_to_anom(total_count.get_count(cur_numeric,cur_categ), cur_count.get_count(cur_numeric,cur_categ), cur_t);
-        
-        sum=sum+cur_score;  //BH: change in paper!
-        (*anom_score)[i] = log(1 + combined_score);
-        */
     }
     return anom_score;
 }
