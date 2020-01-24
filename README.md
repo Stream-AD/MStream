@@ -3,7 +3,7 @@
 
 M-Stream, short for Streaming Multi-Aspect Group Anomaly Detection, detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
 
-This implementation is based on the following paper - [M-Stream:Streaming Multi-Aspect Group Anomaly Detection](). *Siddharth Bhatia, Bryan Hooi*. 2020.
+This implementation is based on the following paper - [M-Stream:Streaming Multi-Aspect Group Anomaly Detection](). *Siddharth Bhatia, Ritesh Kumar, Bryan Hooi*. 2020.
 
 ## Getting started
 1. Run `make` to compile code and create the binary.
