@@ -16,6 +16,8 @@ int Numerichash::hash(double cur_node) {
     int bucket;
     cur_node = cur_node * (num_buckets - 1);
     bucket = floor(cur_node);
+    if(bucket < 0) 
+        bucket = (bucket%num_buckets + num_buckets)%num_buckets;
     return bucket;
 }
 
