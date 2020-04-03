@@ -1,7 +1,7 @@
 # MStream
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/bhatiasiddharth/M-Stream/blob/master/LICENSE)
 
-MStream, detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
+MStream detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
 
 ## Getting started
 1. Run `make` to compile code and create the binary.
