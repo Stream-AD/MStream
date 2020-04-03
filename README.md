@@ -9,7 +9,9 @@ MStream detects group anomalies from a multi-aspect data stream in constant time
 3. Run `make clean` to clean binaries.
 
 ## Demo
-1. Run `./demo.sh` to compile the code and run it on example dataset
+
+1. Create a `data` directory and place the datasets in this directory.
+2. Run `./demo.sh DATASET_NAME` to compile the code and run it on the given dataset
 
 
 ## Command line options

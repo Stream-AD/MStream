@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cmath>
+#include <limits>
 #include "anom.hpp"
 #include "numerichash.hpp"
 #include "recordhash.hpp"
