@@ -1,9 +1,7 @@
-# M-Stream
+# MStream
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/bhatiasiddharth/M-Stream/blob/master/LICENSE)
 
-M-Stream, short for Streaming Multi-Aspect Group Anomaly Detection, detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
-
-This implementation is based on the following paper - [M-Stream:Streaming Multi-Aspect Group Anomaly Detection](). *Siddharth Bhatia, Ritesh Kumar, Bryan Hooi*. 2020.
+MStream,  for Streaming Multi-Aspect Group Anomaly Detection, detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
 
 ## Getting started
 1. Run `make` to compile code and create the binary.
@@ -26,7 +24,7 @@ This implementation is based on the following paper - [M-Stream:Streaming Multi-
 
 
 ## Input file format
-M-Stream expects the input multi-aspect record stream to be stored in three files:
+MStream expects the input multi-aspect record stream to be stored in three files:
 1. `Numerical file`: contains `,` separated Numerical Features. 
 2. `Categorical file`: contains `,` separated Categorical Features. 
 3. `Time File`: contains Timestamps. 
