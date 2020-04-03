@@ -6,7 +6,8 @@ import time
 from torch.autograd import Variable
 import pandas as pd
 import argparse
-
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']=True # For MAC MKL Optimization
 np.random.seed(0)
 torch.manual_seed(0)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

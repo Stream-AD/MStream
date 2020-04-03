@@ -13,5 +13,6 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c $<
 clean:
 	rm -rf $(TARGET) *.o
+	rm -rf ../*.txt
 	
 .PHONY: all clean

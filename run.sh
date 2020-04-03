@@ -1,5 +1,6 @@
 #/bin/bash
 cd mstream/
+make clean
 make
 cd ../
 

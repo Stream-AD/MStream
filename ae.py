@@ -3,7 +3,8 @@ import torch.nn as nn
 import numpy as np
 import time
 import argparse
-
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']=True # For MAC MKL Optimization
 np.random.seed(0)
 torch.manual_seed(0)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
