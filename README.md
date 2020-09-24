@@ -13,7 +13,7 @@ Implementation of
 Detection](https://arxiv.org/pdf/2009.08451.pdf). *Siddharth Bhatia, Arjit Jain, Pan Li, Ritesh Kumar, Bryan Hooi.*
 
 ![](https://www.comp.nus.edu.sg/~sbhatia/assets/img/mstream.png)
-MSᴛʀᴇᴀᴍ detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record.
+MSᴛʀᴇᴀᴍ detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record. MSᴛʀᴇᴀᴍ builds on top of [MIDAS](https://github.com/Stream-AD/MIDAS) to work in a multi-aspect setting such as event-log data, multi-attributed graphs etc.
 
 ## Demo
 
