@@ -123,7 +123,7 @@ int main(int argc, const char *argv[]) {
     program.add_argument("-a", "--alpha")
             .default_value(0.8)
             .action([](const std::string &value) { return std::stod(value); })
-            .help("Alpha: Temporal Decay Factor. Default is 0.6");
+            .help("Alpha: Temporal Decay Factor. Default is 0.8");
     program.add_argument("-o", "--output").default_value(string("scores.txt")).help(
             "Output File. Default is scores.txt");
     try {
