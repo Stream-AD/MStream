@@ -7,7 +7,17 @@
   <a href="https://arxiv.org/pdf/2009.08451.pdf">
     <img src="http://img.shields.io/badge/Paper-PDF-brightgreen.svg">
   </a>
-  <a href="https://github.com/Stream-AD/MStream/blob/master/LICENSE">
+  
+   <a href="https://www.comp.nus.edu.sg/~sbhatia/assets/pdf/MStream_slides.pdf">
+      <img src="http://img.shields.io/badge/Slides-PDF-ff9e18.svg">
+  </a>
+  
+  
+  <a href="https://youtu.be/HtemjzuKryU">
+    <img src="http://img.shields.io/badge/Talk-Youtube-ff69b4.svg">
+  </a>
+ 
+  <a href="https://github.com/Stream-AD/MIDAS/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
   </a>
 </p>
