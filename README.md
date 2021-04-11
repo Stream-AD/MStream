@@ -70,17 +70,14 @@ Both Numerical and Categorical files contain corresponding features of the mult
 
 ## Citation
 
-If you use this code for your research, please consider citing our arXiv preprint
+If you use this code for your research, please consider citing our WWW paper
 
 ```bibtex
-@misc{bhatia2020mstream,
-    title={MSᴛʀᴇᴀᴍ: Fast Streaming Multi-Aspect Group Anomaly
-Detection},
+@inproceedings{bhatia2021mstream,
+    title={Fast Anomaly Detection in Multi-Aspect Streams},
     author={Siddharth Bhatia and Arjit Jain and Pan Li and Ritesh Kumar and Bryan Hooi},
-    year={2020},
-    eprint={2009.08451},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+    booktitle={The Web Conference (WWW)},
+    year={2021}
 }
 
 ```
