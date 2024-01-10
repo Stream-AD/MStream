@@ -23,7 +23,7 @@
 
 Implementation of
 
-- [MSᴛʀᴇᴀᴍ: Fast Anomaly Detection in Multi-Aspect Streams](https://arxiv.org/pdf/2009.08451.pdf). *Siddharth Bhatia, Arjit Jain, Pan Li, Ritesh Kumar, Bryan Hooi.* The Web Conference (formerly WWW), 2021.
+- [MSᴛʀᴇᴀᴍ: Fast Anomaly Detection in Multi-Aspect Streams](https://dl.acm.org/doi/pdf/10.1145/3442381.3450023). *Siddharth Bhatia, Arjit Jain, Pan Li, Ritesh Kumar, Bryan Hooi.* The Web Conference (formerly WWW), 2021.
 
 ![](https://www.comp.nus.edu.sg/~sbhatia/assets/img/mstream.png)
 MSᴛʀᴇᴀᴍ detects group anomalies from a multi-aspect data stream in constant time and memory. We output an anomaly score for each record. MSᴛʀᴇᴀᴍ builds on top of [MIDAS](https://github.com/Stream-AD/MIDAS) to work in a multi-aspect setting such as event-log data, multi-attributed graphs etc.
