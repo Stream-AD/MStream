@@ -70,7 +70,7 @@ Both Numerical and Categorical files contain corresponding features of the mult
 
 ## Citation
 
-If you use this code for your research, please consider citing our WWW paper
+If you use this code for your research, please consider citing our WWW paper.
 
 ```bibtex
 @inproceedings{bhatia2021mstream,
